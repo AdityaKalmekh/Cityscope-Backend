@@ -32,7 +32,7 @@ export const handleCreatePost = async (req: MulterRequest, res: Response): Promi
       return;
     }
 
-    const { content, postType, location }: CreatePostRequest = req.body;
+    const { content, postType, city }: CreatePostRequest = req.body;
     const userId = req.userId;
     const imageFile = req.file;
 
@@ -86,7 +86,7 @@ export const handleCreatePost = async (req: MulterRequest, res: Response): Promi
       content: content.trim(),
       postType,
       image: imageUrl,
-      location
+      city
     });
 
     if (!result.success) {

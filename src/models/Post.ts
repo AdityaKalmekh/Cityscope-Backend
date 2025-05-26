@@ -144,12 +144,6 @@ postSchema.methods.addReply = async function(reply: Omit<IReply, '_id' | 'create
   return await this.save();
 };
 
-// Instance method to remove a reply
-postSchema.methods.removeReply = async function(replyId: Types.ObjectId): Promise<IPost> {
-  this.replies = this.replies.filter((reply) => !reply._id?.equals(replyId));
-  return await this.save();
-};
-
 // Instance method to get likes count
 postSchema.methods.getLikesCount = function(): number {
   return this.likes.length;
@@ -173,45 +167,6 @@ postSchema.methods.isLikedBy = function(userId: Types.ObjectId): boolean {
 // Instance method to check if post is disliked by user
 postSchema.methods.isDislikedBy = function(userId: Types.ObjectId): boolean {
   return this.dislikes.some((id: Types.ObjectId) => id.equals(userId));
-};
-
-// Static method to get posts with pagination
-postSchema.statics.getPaginatedPosts = async function(
-  filter: any = {}, 
-  options: { page: number; limit: number; sortBy: string } = { page: 1, limit: 10, sortBy: 'newest' }
-) {
-  const { page, limit, sortBy } = options;
-  const skip = (page - 1) * limit;
-  
-  // Determine sort order
-  let sort: any = { createdAt: -1 }; // Default: newest first
-  if (sortBy === 'oldest') {
-    sort = { createdAt: 1 };
-  } else if (sortBy === 'mostLiked') {
-    sort = { 'likes': -1, createdAt: -1 };
-  }
-  
-  const posts = await this.find(filter)
-    .populate('author', 'firstName lastName email bio isVerified')
-    .populate('replies.author', 'firstName lastName email')
-    .sort(sort)
-    .skip(skip)
-    .limit(limit)
-    .exec();
-  
-  const totalPosts = await this.countDocuments(filter);
-  const totalPages = Math.ceil(totalPosts / limit);
-  
-  return {
-    posts,
-    pagination: {
-      currentPage: page,
-      totalPages,
-      totalPosts,
-      hasNext: page < totalPages,
-      hasPrev: page > 1
-    }
-  };
 };
 
 // Pre-save middleware to validate post constraints

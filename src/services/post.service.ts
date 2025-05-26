@@ -73,7 +73,7 @@ export const createPost = async (
       postType: postData.postType,
       image: postData.image?.trim() || undefined,
       author: new Types.ObjectId(userId),
-      city: postData.location || undefined
+      city: postData.city || undefined
     });
 
     const savedPost = await newPost.save();

@@ -60,7 +60,7 @@ export interface CreatePostRequest {
   content: string;
   postType: PostType;
   image?: string;
-  location?: Partial<ILocation>;
+  city?: string;
 }
 
 // Response interfaces
