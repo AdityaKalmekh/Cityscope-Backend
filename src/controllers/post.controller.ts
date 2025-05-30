@@ -26,7 +26,7 @@ interface UploadedFile {
 export const handleCreatePost = async (req: Request, res: Response): Promise<void> => {
   try {
     // Check if user is authenticated
-    if (!req.userId) {
+    if (!(req as any).userId) {
       res.status(401).json({
         success: false,
         message: 'Authentication required',
@@ -123,7 +123,7 @@ export const handleCreatePost = async (req: Request, res: Response): Promise<voi
 export const handleTogglePostLike = async (req: Request, res: Response): Promise<void> => {
   try {
     // Check if user is authenticated
-    if (!req.userId) {
+    if (!(req as any).userId) {
       res.status(401).json({
         success: false,
         message: 'Authentication required',
@@ -133,7 +133,7 @@ export const handleTogglePostLike = async (req: Request, res: Response): Promise
     }
 
     const { postId } = req.params;
-    const userId = req.userId;
+    const userId = (req as any).userId;
 
     if (!postId) {
       res.status(400).json({
@@ -178,7 +178,7 @@ export const handleTogglePostLike = async (req: Request, res: Response): Promise
 export const handleTogglePostDislike = async (req: Request, res: Response): Promise<void> => {
   try {
     // Check if user is authenticated
-    if (!req.userId) {
+    if (!(req as any).userId) {
       res.status(401).json({
         success: false,
         message: 'Authentication required',
@@ -188,7 +188,7 @@ export const handleTogglePostDislike = async (req: Request, res: Response): Prom
     }
 
     const { postId } = req.params;
-    const userId = req.userId;
+    const userId = (req as any).userId;
 
     if (!postId) {
       res.status(400).json({
@@ -233,7 +233,7 @@ export const handleTogglePostDislike = async (req: Request, res: Response): Prom
 export const handleGetUserCityFeed = async (req: Request, res: Response): Promise<void> => {
   try {
     // Check if user is authenticated
-    if (!req.userId) {
+    if (!(req as any).userId) {
       res.status(401).json({
         success: false,
         message: 'Authentication required',
@@ -242,7 +242,7 @@ export const handleGetUserCityFeed = async (req: Request, res: Response): Promis
       return;
     }
 
-    const userId = req.userId;
+    const userId = (req as any).userId;
     const queryParams: PostQueryParams = {
       postType: req.query.postType as PostType,
       city: req.query.city as string, // This allows filtering by different cities if needed

@@ -13,7 +13,7 @@ interface UpdateProfileRequestBody {
 export const handleUpdateProfile = async (req: Request, res: Response): Promise<void> => {
   try {
     // Check if user is authenticated (this should be set by auth middleware)
-    if (!req.userId) {
+    if (!(req as any).userId) {
       res.status(401).json({
         success: false,
         message: 'Authentication required',
@@ -23,7 +23,7 @@ export const handleUpdateProfile = async (req: Request, res: Response): Promise<
     }
 
     const { firstName, lastName, bio, city }: UpdateProfileRequestBody = req.body;
-    const userId = req.userId;
+    const userId = (req as any).userId;
 
     // Validate required fields
     if (!firstName?.trim() || !lastName?.trim()) {
@@ -103,7 +103,7 @@ export const handleUpdateProfile = async (req: Request, res: Response): Promise<
 export const handleGetProfile = async (req: Request, res: Response): Promise<void> => {
   try {
     // Check if user is authenticated
-    if (!req.userId) {
+    if (!(req as any).userId) {
       res.status(401).json({
         success: false,
         message: 'Authentication required',
@@ -112,7 +112,7 @@ export const handleGetProfile = async (req: Request, res: Response): Promise<voi
       return;
     }
 
-    const userId = req.userId;
+    const userId = (req as any).userId;
 
     // Call profile service
     const result = await getUserProfile(userId);

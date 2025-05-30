@@ -58,7 +58,7 @@ export const authenticateToken = async (
         //     userData: user
         // };
 
-        req.userId = decoded.userId;
+        (req as any).userId = decoded.userId;
 
         next();
     } catch (error) {
