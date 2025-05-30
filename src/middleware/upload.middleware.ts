@@ -19,7 +19,7 @@ const storage = multer.memoryStorage();
 
 // File filter function with proper typing
 const fileFilter = (
-  req: Request, 
+  req: any, 
   file: MulterFile, 
   cb: FileFilterCallback
 ): void => {

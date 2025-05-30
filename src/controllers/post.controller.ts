@@ -9,8 +9,17 @@ import {
 import { CreatePostRequest, PostQueryParams, PostType } from '../types/post.types';
 import { uploadImageToCloudinary } from '../services/cloudinary.service';
 
-interface RequestWithFile extends Request {
-  file?: Express.Multer.File;
+// Define a simple file interface
+interface UploadedFile {
+  fieldname: string;
+  originalname: string;
+  encoding: string;
+  mimetype: string;
+  size: number;
+  buffer: Buffer;
+  destination?: string;
+  filename?: string;
+  path?: string;
 }
 
 // Controller to create a new post
@@ -27,8 +36,8 @@ export const handleCreatePost = async (req: Request, res: Response): Promise<voi
     }
 
     const { content, postType, city }: CreatePostRequest = req.body;
-    const userId = req.userId;
-    const imageFile = (req as RequestWithFile).file;
+    const userId = (req as any).userId;
+    const imageFile = (req as any).file;
 
     // Validate required fields
     if (!content?.trim()) {
