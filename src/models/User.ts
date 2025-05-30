@@ -76,7 +76,6 @@ const userSchema = new Schema<IUser>({
   }
 });
 
-userSchema.index({ email: 1 });
 userSchema.index({ createdAt: -1 });
 userSchema.index({ isActive: 1, isVerified: 1 });
 

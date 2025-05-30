@@ -10,7 +10,6 @@ const loadEnv = () => {
     }
 
     console.log('Environment:', process.env.NODE_ENV);
-    console.log('Using database:', process.env.MONGODB_URI?.split(':')[0]); // Logs database without credentials
 };
 
 export default loadEnv;
