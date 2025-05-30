@@ -2,10 +2,6 @@
 import { Request, Response } from 'express';
 import { updateUserProfile, getUserProfile } from '../services/profile.service';
 
-interface AuthenticatedRequest extends Request {
-  userId: string
-}
-
 interface UpdateProfileRequestBody {
   firstName: string;
   lastName: string;
@@ -14,7 +10,7 @@ interface UpdateProfileRequestBody {
 }
 
 // Controller to update user profile
-export const handleUpdateProfile = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+export const handleUpdateProfile = async (req: Request, res: Response): Promise<void> => {
   try {
     // Check if user is authenticated (this should be set by auth middleware)
     if (!req.userId) {
@@ -104,7 +100,7 @@ export const handleUpdateProfile = async (req: AuthenticatedRequest, res: Respon
 };
 
 // Controller to get user profile
-export const handleGetProfile = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+export const handleGetProfile = async (req: Request, res: Response): Promise<void> => {
   try {
     // Check if user is authenticated
     if (!req.userId) {

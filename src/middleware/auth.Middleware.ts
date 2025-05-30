@@ -1,18 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyToken, getUserById } from '../services/auth.service';
 
-// interface AuthenticatedRequest extends Request {
-//     userId: string
-// }
-
-declare global {
-  namespace Express {
-    interface Request {
-        userId: string;
-    }
-  }
-}
-
 // Middleware to verify JWT token
 export const authenticateToken = async (
     req: Request,

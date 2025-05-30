@@ -9,18 +9,8 @@ import {
 import { CreatePostRequest, PostQueryParams, PostType } from '../types/post.types';
 import { uploadImageToCloudinary } from '../services/cloudinary.service';
 
-// Extend Request interface to include authenticated user
-interface AuthenticatedRequest extends Request {
-  userId: string;
-}
-
-// Extend Request interface to include file upload
-interface MulterRequest extends AuthenticatedRequest {
-  file?: Express.Multer.File;
-}
-
 // Controller to create a new post
-export const handleCreatePost = async (req: MulterRequest, res: Response): Promise<void> => {
+export const handleCreatePost = async (req: Request, res: Response): Promise<void> => {
   try {
     // Check if user is authenticated
     if (!req.userId) {
@@ -117,7 +107,7 @@ export const handleCreatePost = async (req: MulterRequest, res: Response): Promi
   }
 };
 
-export const handleTogglePostLike = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+export const handleTogglePostLike = async (req: Request, res: Response): Promise<void> => {
   try {
     // Check if user is authenticated
     if (!req.userId) {
@@ -172,7 +162,7 @@ export const handleTogglePostLike = async (req: AuthenticatedRequest, res: Respo
   }
 };
 
-export const handleTogglePostDislike = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+export const handleTogglePostDislike = async (req: Request, res: Response): Promise<void> => {
   try {
     // Check if user is authenticated
     if (!req.userId) {
@@ -227,7 +217,7 @@ export const handleTogglePostDislike = async (req: AuthenticatedRequest, res: Re
   }
 }
 
-export const handleGetUserCityFeed = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+export const handleGetUserCityFeed = async (req: Request, res: Response): Promise<void> => {
   try {
     // Check if user is authenticated
     if (!req.userId) {
