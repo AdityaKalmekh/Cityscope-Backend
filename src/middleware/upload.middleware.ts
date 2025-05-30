@@ -1,16 +1,33 @@
-import multer from 'multer';
+import multer, { FileFilterCallback } from 'multer';
 import { Request } from 'express';
+
+// Define the file interface explicitly
+interface MulterFile {
+  fieldname: string;
+  originalname: string;
+  encoding: string;
+  mimetype: string;
+  size: number;
+  buffer: Buffer;
+  destination?: string;
+  filename?: string;
+  path?: string;
+}
 
 // Configure multer for memory storage
 const storage = multer.memoryStorage();
 
-// File filter function
-const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+// File filter function with proper typing
+const fileFilter = (
+  req: Request, 
+  file: MulterFile, 
+  cb: FileFilterCallback
+): void => {
   // Check if the file is an image
   if (file.mimetype.startsWith('image/')) {
     cb(null, true);
   } else {
-    cb(null, false);
+    cb(new Error('Only image files are allowed!'));
   }
 };
 
